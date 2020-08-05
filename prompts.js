@@ -1,6 +1,7 @@
 // Dependencies
 const inquirer = require("inquirer");
 const mysql = require("mysql");
+const connection = require("./app");
 
 // =====================================================================
 
@@ -19,13 +20,15 @@ function startQuestions (){
                 "View All Employees by Department", 
                 "View All Employees by Position",
                 "View All Employees by Manager", 
+                "View Department Budgets", 
                 "Add Employee", 
                 "Remove Employee",
                 "Remove Department",
                 "Remove Position", 
                 "Update Employee", 
                 "Update Employee Role", 
-                "Update Employee Manager", 
+                "Update Employee Manager",
+
                 "Quit"
             ],
         },
@@ -44,6 +47,8 @@ function startQuestions (){
             viewAllEmpPos();
         } else if (reply.start === "View All Employees by Manager") {
             viewAllEmpMgr();
+        } else if (reply.start === "View Department Budgets") {
+            viewBudget();
         } else if (reply.start === "Add Employee") {
             addEmployee();
         } else if (reply.start === "Remove Employee") {
@@ -65,19 +70,49 @@ function startQuestions (){
 }
 
 // VIEW ALL EMPLOYEES
-function viewAllEmp (){};
+function viewAllEmp (){
+    // connect to server and throw error if there is one
+    connection.query("SELECT * FROM employees", function(err, res) {
+        if (err) throw err;
+        // show data in table in console
+        console.table(res);
+        // back to the top
+        startQuestions();
+    });
+};
 
 // VIEW ALL DEPARTMENTS
-function viewAllDept (){};
+function viewAllDept (){
+    // connect to server and throw error if there is one
+    connection.query("SELECT * FROM department", function(err, res) {
+        if (err) throw err;
+        // show data in table in console
+        console.table(res);
+        // back to the top
+        startQuestions();
+    });
+};
 
 // VIEW ALL POSITIONS
-function viewAllPos (){};
+function viewAllPos (){
+    // connect to server and throw error if there is one
+    connection.query("SELECT * FROM positions", function(err, res) {
+        if (err) throw err;
+        // show data in table in console
+        console.table(res);
+        // back to the top
+        startQuestions();
+    });
+};
 
 // VIEW ALL EMPLOYEES BY DEPT
 function viewAllEmpDept (){};
 
 // VIEW ALL EMPLOYEES BY MGR
 function viewAllEmpMgr (){};
+
+// VIEW BUDGET BY DEPARTMENT
+function viewBudget (){};
 
 // ADD EMPLOYEE PROMPTS
 function addEmployee (){
@@ -122,6 +157,18 @@ function addEmployee (){
         },
         ]
     )
+    // INSERT INTO employee SET ?
+    .then(function (){
+        console.log("Inserting new employee...\n");
+        const query = connection.query("INSERT INTO employees SET ?", {
+            first_name: first_name,
+            last_name: last_name,
+            // dept_id,
+            // manager_id
+        })
+    })
+
+    // add new employee?
     .then(function (userAddNew) {
         if (userAddNew.addnew === true) {
             addEmployee();
@@ -153,5 +200,3 @@ function updateEmpMgr (){};
 function quit (){};
 
 startQuestions();
-
-// module.exports = prompts;

@@ -34,6 +34,6 @@ VALUES
 ("Beverly", "Crusher", 5, 1),
 ("Data", null, 6, 1),
 ("Wesley", "Crusher", 7, 3),
-("Deonna", "Troi", 8, 1),
+("Deanna", "Troi", 8, 1),
 ("Ro", "Laren", 9, 2),
 ("Guinan", null, 10, null);

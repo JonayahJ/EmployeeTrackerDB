@@ -4,6 +4,24 @@ const mysql = require("mysql");
 const connection = require("./app");
 
 // =====================================================================
+// starting questions
+const viewAllArr=[
+    "View All Employees",
+    "View All Departments",
+    "View All Positions", 
+    "View All Employees by Department", 
+    "View All Employees by Position",
+    // "View All Employees by Manager", 
+    // "View Department Budgets", 
+    "Add Employee", 
+    "Remove Employee",
+    // "Remove Department",
+    "Remove Position", 
+    "Update Employee", 
+    "Update Employee Role", 
+    // "Update Employee Manager",
+    "Quit"
+];
 
 // Starting prompts
 function startQuestions (){
@@ -13,24 +31,7 @@ function startQuestions (){
             type: "list",
             message: "What would you like to do?",
             name: "start",
-            choices: [
-                "View All Employees",
-                "View All Departments",
-                "View All Positions", 
-                "View All Employees by Department", 
-                "View All Employees by Position",
-                "View All Employees by Manager", 
-                "View Department Budgets", 
-                "Add Employee", 
-                "Remove Employee",
-                "Remove Department",
-                "Remove Position", 
-                "Update Employee", 
-                "Update Employee Role", 
-                "Update Employee Manager",
-
-                "Quit"
-            ],
+            choices: viewAllArr,
         },
         ]
     )
@@ -105,14 +106,42 @@ function viewAllPos (){
     });
 };
 
+function findEmployeeById(id){
+    //connection to mysql do findall by id
+}
+
 // VIEW ALL EMPLOYEES BY DEPT
-function viewAllEmpDept (){};
+function viewAllEmpDept (){
+    //we need to grab all department.id
+    //ask user which department you want to look at
+    // get all from department from mysql first so we get an array ( id)//
+    //**which dept_id are you looking for 
+      // clean up late run forloop on the dept_id for user to choose 
+      //really make it good map key value pair of id and dept name
+    //**findallemployees by the departmentid
+    inquirer.prompt([{
+        type: "list",
+        message: "Choose the new employee's department:",
+        name: "department",
+        choices: [
+            "1-Command",
+            "2-Operations",
+            "3-Science",
+            "4-Personnel"
+        ]
+    }])
+    connection.query("SELECT * FROM employees ", function(err, res){
+        if (err) throw (err);
+        console.table(res);
+        startQuestions();
+    })
+};
 
 // VIEW ALL EMPLOYEES BY MGR
 function viewAllEmpMgr (){};
 
 // VIEW BUDGET BY DEPARTMENT
-function viewBudget (){};
+// function viewBudget (){};
 
 // ADD EMPLOYEE PROMPTS
 function addEmployee (){
@@ -135,7 +164,8 @@ function addEmployee (){
             choices: [
                 "1-Command",
                 "2-Operations",
-                "3-Science"
+                "3-Science",
+                "4-Personnel"
             ]
         },
         {
@@ -159,6 +189,10 @@ function addEmployee (){
     )
     // INSERT INTO employee SET ?
     .then(function (){
+        //do a findallby employee fx which gets data from mysql (this returns an array)
+        //make this a beautiful array deptidArr
+        //use inquirer
+        //choices:deptidArr
         console.log("Inserting new employee...\n");
         const query = connection.query("INSERT INTO employees SET ?", {
             first_name: first_name,
@@ -182,7 +216,7 @@ function addEmployee (){
 function removeEmp (){};
 
 // REMOVE DEPARTMENT
-function removeDept (){};
+// function removeDept (){};
 
 // REMOVE POSITION
 function removePos (){};
@@ -194,7 +228,7 @@ function updateEmp (){};
 function updateEmpRole (){};
 
 // UPDATE EMPLOYEE MANAGER
-function updateEmpMgr (){};
+// function updateEmpMgr (){};
 
 // QUIT
 function quit (){};

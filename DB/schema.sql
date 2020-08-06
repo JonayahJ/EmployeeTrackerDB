@@ -35,6 +35,8 @@ CREATE TABLE positions (
 CREATE TABLE employees (
     -- add an auto incrementing id as the primary key
     id INT AUTO_INCREMENT NOT NULL,
+    -- add title of employee
+    designation VARCHAR(30) NULL,
     -- add first_name of employee
     first_name VARCHAR(30) NOT NULL,
     -- add last_name of employee

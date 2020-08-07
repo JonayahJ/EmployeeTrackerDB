@@ -8,7 +8,8 @@
   3. [Usage](#usage)
   4. [License](#license)
   5. [Contributors](#contributors)
-  6. [Tests](#tests)
+  6. [Comments](#comments)
+  7. [Video Link](#Link-to-Video)
   
   ## Project Description
   This ia a command line application that will allow you to update Jo's MySQL database of Star Trek The Next Generation's crew.  Add, view, and update new employees, departments, and positions through the command line and peruse the crew list in tables sorted for viewing by department.
@@ -25,8 +26,11 @@
   ### Contributors
   Jonayah M. Jackson
   
-  #### Tests
-  No tests.
+  #### Comments
+  I was able to get the views and adds working, but updating did not work for me unfortunately.
+
+  #### Link to Video
+  Video: https://drive.google.com/file/d/1W5GI84c6Zmc_zC5Liod5AhBpOz9mn_R-/view
 
 
   ###### Contact Me

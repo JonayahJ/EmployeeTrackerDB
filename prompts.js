@@ -13,7 +13,9 @@ const viewAllArr=[
     "View All Employees by Position",
     // "View All Employees by Manager", 
     // "View Department Budgets", 
-    "Add Employee", 
+    "Add Employee",
+    "Add Position", 
+    "Add Department",
     "Remove Employee",
     // "Remove Department",
     "Remove Position", 
@@ -52,6 +54,10 @@ function startQuestions (){
             viewBudget();
         } else if (reply.start === "Add Employee") {
             addEmployee();
+        } else if (reply.start === "Add Position") {
+            addPosition();
+        } else if (reply.start === "Add Department") {
+            addDepartment();
         } else if (reply.start === "Remove Employee") {
             removeEmp();
         } else if (reply.start === "Remove Department") {
@@ -198,6 +204,40 @@ function addEmployee (){
         console.log("Inserting new employee...\n");
         const query = connection.query("INSERT INTO employees (designation, first_name, last_name, positions_id, manager_id) VALUES (?, ?, ?, ?, ?)",
         [answer.designation, answer.first_name, answer.last_name, answer.department, answer.manager],
+        function (err, res) {
+          if (err) throw err;
+          console.table(res);
+          startQuestions();
+          }
+        )
+    })
+};
+
+function addPosition (){
+    inquirer.prompt(
+        [
+        {
+            type: "input",
+            message: "Enter the new position title:",
+            name: "title",
+        },
+        {
+            type: "input",
+            message: "Enter the salaray for the new positions:",
+            name: "salary",
+        },
+        {
+            type: "input",
+            message: "Input the department of the new position: [1] for Command, [2] for Operations, [3] for Science, [4] for Personnel, or [n] for other any other new department",
+            name: "dept_id",
+        },
+        ]
+    )
+    // INSERT INTO position SET ?
+    .then(function (answer){
+        console.log("Inserting new position...\n");
+        const query = connection.query("INSERT INTO positions (title, salary, dept_id) VALUES (?, ?, ?)",
+        [answer.title, answer.salary, answer.dept_id],
         function (err, res) {
           if (err) throw err;
           console.table(res);

@@ -42,7 +42,7 @@ VALUES
 -- view all employees
 SELECT * FROM employees;
 
--- view all employees by department
+-- view all employees by dept_id 1 (copy for 2-4)
 SELECT
     employees.designation, 
     employees.first_name,

@@ -14,8 +14,8 @@ VALUES
 ("Captain", 250000, 1), 
 ("First Officer", 200000, 1), 
 ("Chief Engineer", 180000, 2),
-("Chief Security Office", 180000, 2),
-("Chief Medical Office", 180000, 3),
+("Chief Security Officer", 180000, 2),
+("Chief Medical Officer", 180000, 3),
 ("Chief Operations Officer", 180000, 2),
 ("Ship's Counselor", 150000, 4),
 ("Engineering Officer", 120000, 2),
@@ -34,8 +34,8 @@ VALUES
 ("Lt.", "Worf", null, 4, 1),
 ("Dr.", "Beverly", "Crusher", 5, 1),
 ("Lt. Commander", "Data", null, 6, 1),
-("Ensign", "Wesley", "Crusher", 8, 3),
 (null, "Deanna", "Troi", 7, 1),
+("Ensign", "Wesley", "Crusher", 8, 3),
 ("Ensign", "Ro", "Laren", 9, 2),
 (null, "Guinan", null, 10, null);
 
@@ -51,4 +51,5 @@ SELECT
 FROM
     employees
 JOIN positions ON positions.id = employees.positions_id
-JOIN department ON department.id = positions.dept_id;
+JOIN department ON department.id = positions.dept_id
+WHERE dept_id = 1;

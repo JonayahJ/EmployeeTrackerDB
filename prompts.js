@@ -112,13 +112,6 @@ function findEmployeeById(id){
 
 // VIEW ALL EMPLOYEES BY DEPT
 function viewAllEmpDept (){
-    //we need to grab all department.id
-    //ask user which department you want to look at
-    // get all from department from mysql first so we get an array ( id)//
-    //**which dept_id are you looking for 
-      // clean up late run forloop on the dept_id for user to choose 
-      //really make it good map key value pair of id and dept name
-    //**findallemployees by the departmentid
     inquirer.prompt([{
         type: "list",
         message: "Choose the new employee's department:",
@@ -130,11 +123,34 @@ function viewAllEmpDept (){
             "4-Personnel"
         ]
     }])
-    connection.query("SELECT * FROM employees ", function(err, res){
-        if (err) throw (err);
-        console.table(res);
-        startQuestions();
-    })
+    // show the departments
+    .then(function (reply) {
+        if (reply.department === "1-Command"){
+            connection.query("SELECT employees.designation, employees.first_name, employees.last_name,department.name AS department FROM employees JOIN positions ON positions.id = employees.positions_id JOIN department ON department.id = positions.dept_id WHERE dept_id = 1", function (err, res) {
+                if (err) throw err;
+                console.table(res);
+                startQuestions();
+              });
+        } else if (reply.department === "2-Operations"){
+            connection.query("SELECT employees.designation, employees.first_name, employees.last_name,department.name AS department FROM employees JOIN positions ON positions.id = employees.positions_id JOIN department ON department.id = positions.dept_id WHERE dept_id = 2", function (err, res) {
+                if (err) throw err;
+                console.table(res);
+                startQuestions();
+            });
+        } else if (reply.department === "3-Science"){
+            connection.query("SELECT employees.designation, employees.first_name, employees.last_name,department.name AS department FROM employees JOIN positions ON positions.id = employees.positions_id JOIN department ON department.id = positions.dept_id WHERE dept_id = 3", function (err, res) {
+                if (err) throw err;
+                console.table(res);
+                startQuestions();
+            });
+        } else {
+            connection.query("SELECT employees.designation, employees.first_name, employees.last_name,department.name AS department FROM employees JOIN positions ON positions.id = employees.positions_id JOIN department ON department.id = positions.dept_id WHERE dept_id = 4", function (err, res) {
+                if (err) throw err;
+                console.table(res);
+                startQuestions();
+            });
+        }
+    });
 };
 
 // VIEW ALL EMPLOYEES BY MGR
@@ -149,6 +165,11 @@ function addEmployee (){
         [
         {
             type: "input",
+            message: "Enter the new employee's rank:",
+            name: "designation",
+        },
+        {
+            type: "input",
             message: "Enter the new employee's first name:",
             name: "first_name",
         },
@@ -159,58 +180,32 @@ function addEmployee (){
         },
         {
             type: "list",
-            message: "Choose the new employee's department:",
+            message: "Choose the new employee's department: [1-Command], [2-Operations], [3-Science], [4-Personnel]",
             name: "department",
-            choices: [
-                "1-Command",
-                "2-Operations",
-                "3-Science",
-                "4-Personnel"
-            ]
+            choices: ["1", "2", "3", "4"]
         },
         {
             type: "list",
-            message: "Choose the new employee's manager:",
+            message: "Choose the new employee's manager: [1-Capt. Picard], [2-Commander Riker], [3-Lt. Commander Geordi], [4-Lt. Worf], or [5-Dr. Crusher]",
             name: "manager",
-            choices: [
-                "1-Capt. Picard",
-                "2-Commander Riker",
-                "3-Lt. Commander Geordi",
-                "4-Lt. Worf",
-                "5-Dr. Crusher"
-            ]
-        },
-        {
-            type: "confirm",
-            message: "Would you like to add another employee?",
-            name: "addnew",
+            choices: ["1", "2", "3", "4", "5"]
         },
         ]
     )
     // INSERT INTO employee SET ?
-    .then(function (){
-        //do a findallby employee fx which gets data from mysql (this returns an array)
-        //make this a beautiful array deptidArr
-        //use inquirer
-        //choices:deptidArr
+    .then(function (answer){
+        
         console.log("Inserting new employee...\n");
-        const query = connection.query("INSERT INTO employees SET ?", {
-            first_name: first_name,
-            last_name: last_name,
-            // dept_id,
-            // manager_id
-        })
+        const query = connection.query("INSERT INTO employees (designation, first_name, last_name, positions_id, manager_id) VALUES (?, ?, ?, ?, ?)",
+        [answer.designation, answer.first_name, answer.last_name, answer.department, answer.manager],
+        function (err, res) {
+          if (err) throw err;
+          console.table(res);
+          startQuestions();
+          }
+        )
     })
-
-    // add new employee?
-    .then(function (userAddNew) {
-        if (userAddNew.addnew === true) {
-            addEmployee();
-        } else {
-            startQuestions();
-        }
-    });
-}
+};
 
 // REMOVE EMPLOYEE
 function removeEmp (){};

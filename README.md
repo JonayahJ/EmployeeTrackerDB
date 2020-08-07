@@ -9,10 +9,9 @@
   4. [License](#license)
   5. [Contributors](#contributors)
   6. [Tests](#tests)
-  7. [Questions](#questions)
   
   ## Project Description
-  Text...
+  This ia a command line application that will allow you to update Jo's MySQL database of Star Trek The Next Generation's crew.  Add, view, and update new employees, departments, and positions through the command line and peruse the crew list in tables sorted for viewing by department.
   
   ## Installation
   Install inquirer (npm install) and you're all set.
@@ -28,9 +27,6 @@
   
   #### Tests
   No tests.
-  
-  #### Questions (FAQs)
-  Text...
 
 
   ###### Contact Me

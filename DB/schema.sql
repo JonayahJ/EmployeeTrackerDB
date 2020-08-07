@@ -28,7 +28,6 @@ CREATE TABLE positions (
     dept_id INTEGER,
     -- state the primary key
 	PRIMARY KEY (id),
-    -- CONSTRAINT FK_department_position
     FOREIGN KEY (dept_id) REFERENCES department(id)
 );
 
